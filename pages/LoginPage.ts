@@ -20,7 +20,6 @@ export class LoginPage extends BasePage {
     }
 
     async login(username?: string, password?: string) {
-        // Read from environment if not provided explicitly
         const user = username || process.env.SAUCE_USERNAME;
         const pass = password || process.env.SAUCE_PASSWORD;
 
