@@ -7,17 +7,21 @@ export class InventoryPage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this.title = page.locator('.title');
-        this.cartLink = page.locator('.shopping_cart_link');
+        this.title = page.getByTestId('title');
+        this.cartLink = page.getByTestId('shopping-cart-link');
     }
 
-    async addItemToCart(itemName: string) {
-        const itemId = itemName.toLowerCase().replace(/ /g, '-');
-        const addToCartButton = this.page.locator(`[data-test="add-to-cart-${itemId}"]`);
-        await addToCartButton.click();
+    getItemByName(itemName: string): Locator {
+        return this.page.locator('.inventory_item').filter({ hasText: itemName });
+    }
+
+    async addItemToCart(itemName: string): Promise<void> {
+        const item = this.getItemByName(itemName);
+        await item.getByRole('button', { name: 'Add to cart' }).click();
     }
 
     async navigateToCart() {
         await this.cartLink.click();
+        await this.page.waitForURL('**/cart.html');
     }
 }
