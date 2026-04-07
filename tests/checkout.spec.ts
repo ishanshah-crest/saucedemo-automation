@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/loginFixture';
+import { testData } from '../utils/testdata';
 
 test.describe('SauceDemo Checkout Workflow', () => {
 
@@ -12,7 +13,7 @@ test.describe('SauceDemo Checkout Workflow', () => {
     });
 
     test('Add backpack to cart and verify checkout', async ({ authenticatedPage, cartPage }) => {
-        const itemToAdd = 'Sauce Labs Backpack';
+        const itemToAdd = testData.products.backpack;
         await authenticatedPage.addItemToCart(itemToAdd);
         await authenticatedPage.navigateToCart();
         await cartPage.verifyItemInCart(itemToAdd);
